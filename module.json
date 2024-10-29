@@ -1,0 +1,11 @@
+{
+    "authorEmail": "monoland.soft@gmail.com",
+    "authorName": "monoland",
+    "authorVendor": "monosoft",
+    "connection": "platform",
+    "name": "Training",
+    "namespace": "Module",
+    "priority": 4,
+    "disabled": false,
+    "providers": "Module\\Training\\Providers\\TrainingServiceProvider"   
+}
