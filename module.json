@@ -5,7 +5,7 @@
     "connection": "platform",
     "name": "Training",
     "namespace": "Module",
-    "priority": 4,
+    "priority": 5,
     "disabled": false,
     "providers": "Module\\Training\\Providers\\TrainingServiceProvider"   
 }
