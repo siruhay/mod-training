@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('participant_id');
             $table->date('datemark')->index();
             $table->time('timemark')->nullable();
+            $table->foreignId('validated_by')->nullable();
+            $table->timestamp('validated_at')->nullable();
             $table->jsonb('files')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
