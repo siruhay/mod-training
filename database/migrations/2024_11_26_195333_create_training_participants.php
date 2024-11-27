@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('training_participants', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 200)->index();
+            $table->string('slug', 40)->unique();
+            $table->foreignId('event_id');
+            $table->morphs('particiable');
+            $table->timestamp('accepted_at')->nullable();
+            $table->jsonb('meta')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

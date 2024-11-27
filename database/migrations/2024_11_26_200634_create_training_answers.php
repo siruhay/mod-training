@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('training_answers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('event_id');
+            $table->foreignId('participant_id');
+            $table->foreignId('question_id');
+            $table->string('answer', 1)->index()->default('A');
+            $table->boolean('is_correct')->default(false);
+            $table->jsonb('meta')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

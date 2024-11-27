@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_events', function (Blueprint $table) {
+        Schema::create('training_committees', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200)->index();
             $table->string('slug', 40)->unique();
-            $table->date('startdate')->index();
-            $table->date('finishdate')->index();
-            $table->foreignId('village_id')->nullable();
-            $table->foreignId('subdistrict_id')->nullable();
-            $table->foreignId('regency_id')->nullable();
-            $table->foreignId('officer_id')->nullable();
-            $table->jsonb('files')->nullable();
+            $table->foreignId('event_id');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_events');
+        Schema::dropIfExists('training_committees');
     }
 };

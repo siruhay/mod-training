@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('training_questions', function (Blueprint $table) {
             $table->id();
+            $table->text('name')->index();
+            $table->string('slug', 40)->unique();
+            $table->foreignId('event_id');
+            $table->enum('mode', ['PRETEST', 'POSTEST'])->index()->default('');
+            $table->jsonb('options');
+            $table->string('answerkey', 1)->index()->default('A');
+            $table->jsonb('meta')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
