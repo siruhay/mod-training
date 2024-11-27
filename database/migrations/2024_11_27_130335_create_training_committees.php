@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 200)->index();
             $table->string('slug', 40)->unique();
+            $table->enum('type', ['CHAIRMAN', 'MEMBER', 'SPEAKER'])->index()->default('MEMBER');
             $table->foreignId('event_id');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
