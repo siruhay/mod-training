@@ -580,9 +580,9 @@ Rundown</bpmn:text>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0np2qhe_di" bpmnElement="Flow_0np2qhe">
         <di:waypoint x="1430" y="530" />
-        <di:waypoint x="1430" y="560" />
-        <di:waypoint x="1320" y="560" />
-        <di:waypoint x="1320" y="770" />
+        <di:waypoint x="1430" y="690" />
+        <di:waypoint x="1340" y="690" />
+        <di:waypoint x="1340" y="770" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bf3q08_di" bpmnElement="Flow_1bf3q08">
         <di:waypoint x="1260" y="490" />
@@ -617,8 +617,8 @@ Rundown</bpmn:text>
       <bpmndi:BPMNEdge id="Flow_0k477vf_di" bpmnElement="Flow_0k477vf">
         <di:waypoint x="940" y="530" />
         <di:waypoint x="940" y="560" />
-        <di:waypoint x="830" y="560" />
-        <di:waypoint x="830" y="630" />
+        <di:waypoint x="850" y="560" />
+        <di:waypoint x="850" y="630" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0952jxy_di" bpmnElement="Flow_0952jxy">
         <di:waypoint x="830" y="515" />
