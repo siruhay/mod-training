@@ -63,11 +63,33 @@ class TrainingEvent extends Model
      * @param Request $request
      * @return array
      */
-    public static function mapCombos(Request $request): array
+    public static function mapCombos(Request $request, $model = null): array
     {
         return [
-            'subdistricts' => TrainingSubdistrict::where('regency_id', 3)->forCombo(),
-            'villages' => []
+            'subdistricts'  => TrainingSubdistrict::where('regency_id', 3)->forCombo(),
+            'villages'      => optional($model)->subdistrict_id ?
+                TrainingVillage::where('district_id', $model->subdistrict_id)->forCombo() :
+                []
+        ];
+    }
+
+    /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id'                => $model->id,
+            'name'              => $model->name,
+            'slug'              => $model->slug,
+            'startdate'         => $model->startdate,
+            'finishdate'        => $model->finishdate,
+            'village_id'        => $model->village_id,
+            'subdistrict_id'    => $model->subdistrict_id,
+            'regency_id'        => $model->regency_id,
         ];
     }
 
@@ -90,7 +112,7 @@ class TrainingEvent extends Model
             $model->startdate = $request->startdate;
             $model->finishdate = $request->finishdate;
             $model->village_id = optional($village)->id;
-            $model->subdistrict_id = optional($village)->subdistrict_id;
+            $model->subdistrict_id = optional($village)->district_id;
             $model->regency_id = optional($village)->regency_id;
             $model->save();
 
@@ -126,7 +148,7 @@ class TrainingEvent extends Model
             $model->startdate = $request->startdate;
             $model->finishdate = $request->finishdate;
             $model->village_id = optional($village)->id;
-            $model->subdistrict_id = optional($village)->subdistrict_id;
+            $model->subdistrict_id = optional($village)->district_id;
             $model->regency_id = optional($village)->regency_id;
             $model->save();
 

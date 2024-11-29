@@ -1,6 +1,12 @@
 <template>
 	<form-show with-helpdesk>
-		<template v-slot:default="{ record }">
+		<template
+			v-slot:default="{
+				combos: { subdistricts, villages },
+				record,
+				store,
+			}"
+		>
 			<v-card-text>
 				<v-row dense>
 					<v-row dense>
