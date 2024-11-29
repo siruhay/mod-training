@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 200)->index();
             $table->string('slug', 40)->unique();
+            $table->foreignId('event_id')->nullable();
             $table->date('datemark')->index();
             $table->time('starttime')->index();
             $table->time('finishtime')->index();

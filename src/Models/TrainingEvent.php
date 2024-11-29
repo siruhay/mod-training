@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Http\Resources\EventResource;
 
@@ -91,6 +92,46 @@ class TrainingEvent extends Model
             'subdistrict_id'    => $model->subdistrict_id,
             'regency_id'        => $model->regency_id,
         ];
+    }
+
+    /**
+     * committees function
+     *
+     * @return HasMany
+     */
+    public function committees(): HasMany
+    {
+        return $this->hasMany(TrainingCommittee::class, 'event_id');
+    }
+
+    /**
+     * participants function
+     *
+     * @return HasMany
+     */
+    public function participants(): HasMany
+    {
+        return $this->hasMany(TrainingParticipant::class, 'event_id');
+    }
+
+    /**
+     * presences function
+     *
+     * @return HasMany
+     */
+    public function presences(): HasMany
+    {
+        return $this->hasMany(TrainingPresence::class, 'event_id');
+    }
+
+    /**
+     * rundowns function
+     *
+     * @return HasMany
+     */
+    public function rundowns(): HasMany
+    {
+        return $this->hasMany(TrainingRundown::class, 'event_id');
     }
 
     /**
