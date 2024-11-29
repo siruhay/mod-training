@@ -17,4 +17,15 @@ class DashboardController extends Controller
     {
         //
     }
+
+    /**
+     * report function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function report(Request $request): void
+    {
+        // 
+    }
 }

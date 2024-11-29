@@ -4,7 +4,7 @@ namespace Module\Training\Providers;
 
 use ReflectionProperty;
 use Illuminate\Support\Arr;
-use Siruhay\Platform\DiscoverEvents;
+use Monoland\Platform\DiscoverEvents;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -39,7 +39,7 @@ class EventServiceProvider extends ServiceProvider
 
         $events     = $this->discoverEvents();
         $provider   = Arr::first($this->app->getProviders(ServiceProvider::class));
-        
+
         if (!$provider || empty($events)) {
             return;
         }
