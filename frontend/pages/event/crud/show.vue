@@ -63,7 +63,48 @@
 			</v-card-text>
 		</template>
 
-		<template v-slot:helpdesk></template>
+		<template v-slot:info="{ theme }">
+			<div class="text-overline mt-4">Aksi</div>
+			<v-divider class="mb-3"></v-divider>
+
+			<v-row dense>
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						block
+						>komite</v-btn
+					>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						block
+						>Peserta</v-btn
+					>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						block
+						>absensi</v-btn
+					>
+				</v-col>
+
+				<v-col cols="6">
+					<v-btn
+						:color="theme"
+						variant="flat"
+						block
+						>rundown</v-btn
+					>
+				</v-col>
+			</v-row>
+		</template>
 	</form-show>
 </template>
 
