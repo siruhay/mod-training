@@ -79,12 +79,19 @@ class TrainingEvent extends Model
      */
     public static function storeRecord(Request $request)
     {
-        $model = new static();
+        $model      = new static();
+        $village    = TrainingVillage::find($request->village_id);
 
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = sha1(now()->toString());
+            $model->startdate = $request->startdate;
+            $model->finishdate = $request->finishdate;
+            $model->village_id = optional($village)->id;
+            $model->subdistrict_id = optional($village)->subdistrict_id;
+            $model->regency_id = optional($village)->regency_id;
             $model->save();
 
             DB::connection($model->connection)->commit();
@@ -109,10 +116,18 @@ class TrainingEvent extends Model
      */
     public static function updateRecord(Request $request, $model)
     {
+        $village    = TrainingVillage::find($request->village_id);
+
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = sha1(now()->toString());
+            $model->startdate = $request->startdate;
+            $model->finishdate = $request->finishdate;
+            $model->village_id = optional($village)->id;
+            $model->subdistrict_id = optional($village)->subdistrict_id;
+            $model->regency_id = optional($village)->regency_id;
             $model->save();
 
             DB::connection($model->connection)->commit();
