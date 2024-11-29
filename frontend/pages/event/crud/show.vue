@@ -73,6 +73,7 @@
 						:color="theme"
 						variant="flat"
 						block
+						@click="$router.push({ name: 'training-committee' })"
 						>komite</v-btn
 					>
 				</v-col>
@@ -82,6 +83,7 @@
 						:color="theme"
 						variant="flat"
 						block
+						@click="$router.push({ name: 'training-participant' })"
 						>Peserta</v-btn
 					>
 				</v-col>
@@ -91,6 +93,7 @@
 						:color="theme"
 						variant="flat"
 						block
+						@click="$router.push({ name: 'training-presence' })"
 						>absensi</v-btn
 					>
 				</v-col>
@@ -100,6 +103,7 @@
 						:color="theme"
 						variant="flat"
 						block
+						@click="$router.push({ name: 'training-rundown' })"
 						>rundown</v-btn
 					>
 				</v-col>
