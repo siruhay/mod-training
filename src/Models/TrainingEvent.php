@@ -58,6 +58,20 @@ class TrainingEvent extends Model
     protected $defaultOrder = 'name';
 
     /**
+     * mapCombos function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapCombos(Request $request): array
+    {
+        return [
+            'subdistricts' => TrainingSubdistrict::where('regency_id', 3)->forCombo(),
+            'villages' => []
+        ];
+    }
+
+    /**
      * The model store method
      *
      * @param Request $request

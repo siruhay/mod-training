@@ -100,6 +100,7 @@ Route::resource('history.presence', TrainingHistoryPresenceController::class)
         'presence' => 'trainingPresence'
     ]);
 
+Route::get('subdistrict/{trainingSubdistrict}/villages', [TrainingSubdistrictController::class, 'villages']);
 Route::resource('subdistrict', TrainingSubdistrictController::class)
     ->parameters(['subdistrict' => 'trainingSubdistrict']);
 

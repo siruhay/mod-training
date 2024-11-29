@@ -10,6 +10,7 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Module\Training\Http\Resources\SubdistrictResource;
 
 class TrainingSubdistrict extends Model
@@ -56,6 +57,16 @@ class TrainingSubdistrict extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * villages function
+     *
+     * @return HasMany
+     */
+    public function villages(): HasMany
+    {
+        return $this->hasMany(TrainingVillage::class, 'district_id');
+    }
 
     /**
      * The model store method

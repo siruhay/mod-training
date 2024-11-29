@@ -111,4 +111,15 @@ class TrainingSubdistrictController extends Controller
 
         return TrainingSubdistrict::destroyRecord($trainingSubdistrict);
     }
+
+    /**
+     * villages function
+     *
+     * @param TrainingSubdistrict $trainingSubdistrict
+     * @return \Illuminate\Http\Response
+     */
+    public function villages(TrainingSubdistrict $trainingSubdistrict)
+    {
+        return $trainingSubdistrict->villages()->forCombo();
+    }
 }
