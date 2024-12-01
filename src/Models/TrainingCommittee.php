@@ -59,6 +59,22 @@ class TrainingCommittee extends Model
     protected $defaultOrder = 'name';
 
     /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'slug' => $model->slug,
+            'name' => $model->name,
+            'type' => $model->type,
+        ];
+    }
+
+    /**
      * The model store method
      *
      * @param Request $request
@@ -71,7 +87,10 @@ class TrainingCommittee extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->type = $request->type;
+
             $parent->committees()->save($model);
 
             DB::connection($model->connection)->commit();
@@ -99,7 +118,9 @@ class TrainingCommittee extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->type = $request->type;
             $model->save();
 
             DB::connection($model->connection)->commit();
