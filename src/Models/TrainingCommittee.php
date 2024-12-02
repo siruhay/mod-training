@@ -10,6 +10,7 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Module\Training\Events\TrainingCommitteeUpdate;
 use Module\Training\Models\TrainingEvent;
 use Module\Training\Http\Resources\CommitteeResource;
 
@@ -93,6 +94,8 @@ class TrainingCommittee extends Model
 
             $parent->committees()->save($model);
 
+            TrainingCommitteeUpdate::dispatch($model);
+
             DB::connection($model->connection)->commit();
 
             return new CommitteeResource($model);
@@ -122,6 +125,8 @@ class TrainingCommittee extends Model
             $model->slug = $request->slug;
             $model->type = $request->type;
             $model->save();
+
+            TrainingCommitteeUpdate::dispatch($model);
 
             DB::connection($model->connection)->commit();
 
