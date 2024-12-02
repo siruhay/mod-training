@@ -71,7 +71,14 @@ class TrainingRundown extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->event_id = $request->event_id;
+            $model->datemark = $request->datemark;
+            $model->starttime = $request->starttime;
+            $model->finishtime = $request->finishtime;
+            $model->agenda = $request->agenda;
+            $model->speaker_id = $request->speaker_id;
             $parent->rundowns()->save($model);
 
             DB::connection($model->connection)->commit();
@@ -99,7 +106,14 @@ class TrainingRundown extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->event_id = $request->event_id;
+            $model->datemark = $request->datemark;
+            $model->starttime = $request->starttime;
+            $model->finishtime = $request->finishtime;
+            $model->agenda = $request->agenda;
+            $model->speaker_id = $request->speaker_id;
             $model->save();
 
             DB::connection($model->connection)->commit();

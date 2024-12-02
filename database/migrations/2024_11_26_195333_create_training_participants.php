@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('slug', 40)->unique();
             $table->foreignId('event_id');
             $table->morphs('particiable');
+            $table->string('nik', 16)->index();
+            $table->string('phone', 20)->index();
+            $table->foreignId('subdistrict_id');
+            $table->foreignId('village_id');
             $table->timestamp('accepted_at')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
