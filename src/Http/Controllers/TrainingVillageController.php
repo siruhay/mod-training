@@ -5,7 +5,9 @@ namespace Module\Training\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Module\Training\Models\TrainingMember;
 use Module\Training\Models\TrainingVillage;
+use Module\Training\Models\TrainingOfficial;
 use Module\Training\Models\TrainingSubdistrict;
 use Module\Training\Http\Resources\VillageCollection;
 use Module\Training\Http\Resources\VillageShowResource;
@@ -118,5 +120,21 @@ class TrainingVillageController extends Controller
         Gate::authorize('destroy', $trainingVillage);
 
         return TrainingVillage::destroyRecord($trainingVillage);
+    }
+
+    /**
+     * particiables function
+     *
+     * @param TrainingVillage $trainingVillage
+     * @param Request $request
+     * @return void
+     */
+    public function particiables(TrainingVillage $trainingVillage, Request $request)
+    {
+        if ($request->mode === 'LKD') {
+            return TrainingMember::where('village_id', $trainingVillage->id)->forCombo();
+        }
+
+        return TrainingOfficial::where('village_id', $trainingVillage->id)->forCombo();
     }
 }

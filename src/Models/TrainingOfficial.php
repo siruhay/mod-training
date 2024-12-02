@@ -10,10 +10,9 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Training\Models\TrainingEvent;
-use Module\Training\Http\Resources\ParticipantResource;
+use Module\Training\Http\Resources\OfficialResource;
 
-class TrainingParticipant extends Model
+class TrainingOfficial extends Model
 {
     use Filterable;
     use HasMeta;
@@ -33,14 +32,14 @@ class TrainingParticipant extends Model
      *
      * @var string
      */
-    protected $table = 'training_participants';
+    protected $table = 'foundation_officials';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['training-participant'];
+    protected $roles = ['training-official'];
 
     /**
      * The attributes that should be cast to native types.
@@ -59,53 +58,12 @@ class TrainingParticipant extends Model
     protected $defaultOrder = 'name';
 
     /**
-     * mapCombos function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapCombos(Request $request, $model = null): array
-    {
-        return [
-            'subdistricts' => TrainingSubdistrict::where('regency_id', 3)->forCombo(),
-            'villages'      => optional($model)->subdistrict_id ?
-                TrainingVillage::where('district_id', $model->subdistrict_id)->forCombo() :
-                [],
-            'particiables' => optional($model)->village_id ? (
-                $model->mode === 'LKD' ?
-                TrainingMember::where('village_id', $model->village_id)->forCombo() :
-                TrainingOfficial::where('village_id', $model->village_id)->forCombo()
-            ) : []
-        ];
-    }
-
-    /**
-     * mapRecordBase function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapRecordBase(Request $request): array
-    {
-        return [
-            'id' => null,
-            'name' => null,
-            'mode' => 'LKD',
-            'particiable' => null,
-            'nik' => null,
-            'phone' => null,
-            'subdistrict_id' => null,
-            'village_id' => null,
-        ];
-    }
-
-    /**
      * The model store method
      *
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request, TrainingEvent $parent)
+    public static function storeRecord(Request $request)
     {
         $model = new static();
 
@@ -113,11 +71,11 @@ class TrainingParticipant extends Model
 
         try {
             // ...
-            $parent->participants()->save($model);
+            $model->save();
 
             DB::connection($model->connection)->commit();
 
-            return new ParticipantResource($model);
+            return new OfficialResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -145,7 +103,7 @@ class TrainingParticipant extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ParticipantResource($model);
+            return new OfficialResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -171,7 +129,7 @@ class TrainingParticipant extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ParticipantResource($model);
+            return new OfficialResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -197,7 +155,7 @@ class TrainingParticipant extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ParticipantResource($model);
+            return new OfficialResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -223,7 +181,7 @@ class TrainingParticipant extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new ParticipantResource($model);
+            return new OfficialResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 

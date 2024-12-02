@@ -104,6 +104,7 @@ Route::get('subdistrict/{trainingSubdistrict}/villages', [TrainingSubdistrictCon
 Route::resource('subdistrict', TrainingSubdistrictController::class)
     ->parameters(['subdistrict' => 'trainingSubdistrict']);
 
+Route::get('village/{trainingVillage}/particiables', [TrainingVillageController::class, 'particiables']);
 Route::resource('subdistrict.village', TrainingVillageController::class)
     ->parameters([
         'subdistrict' => 'trainingSubdistrict',
