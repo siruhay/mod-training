@@ -77,7 +77,7 @@ class TrainingRundownController extends Controller
 
         $request->validate([]);
 
-        return TrainingRundown::updateRecord($request, $trainingRundown);
+        return TrainingRundown::updateRecord($request, $trainingRundown, $trainingEvent);
     }
 
     /**

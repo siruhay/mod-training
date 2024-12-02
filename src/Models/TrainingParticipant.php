@@ -10,6 +10,7 @@ use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Module\Reference\Models\ReferenceGender;
 use Module\Training\Models\TrainingEvent;
 use Module\Training\Http\Resources\ParticipantResource;
 
@@ -67,6 +68,7 @@ class TrainingParticipant extends Model
     public static function mapCombos(Request $request, $model = null): array
     {
         return [
+            'genders' => ReferenceGender::forCombo(),
             'subdistricts' => TrainingSubdistrict::where('regency_id', 3)->forCombo(),
             'villages'      => optional($model)->subdistrict_id ?
                 TrainingVillage::where('district_id', $model->subdistrict_id)->forCombo() :
@@ -96,6 +98,32 @@ class TrainingParticipant extends Model
             'phone' => null,
             'subdistrict_id' => null,
             'village_id' => null,
+            'gender_id' => null,
+        ];
+    }
+
+    /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'slug' => $model->slug,
+            'mode' => $model->mode,
+            'nik' => $model->nik,
+            'phone' => $model->phone,
+            'particiable' => [
+                'title' => $model->name,
+                'value' => $model->particiable_id
+            ],
+            'gender_id' => $model->gender_id,
+            'subdistrict_id' => $model->subdistrict_id,
+            'village_id' => $model->village_id,
         ];
     }
 
@@ -112,7 +140,17 @@ class TrainingParticipant extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = sha1($parent->id . '-' . $request->nik);
+            $model->mode = $request->mode;
+            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember) : get_class(new TrainingOfficial);
+            $model->particiable_id = $request->particiable['value'];
+            $model->nik = $request->nik;
+            $model->phone = $request->phone;
+            $model->gender_id = $request->gender_id;
+            $model->subdistrict_id = $request->subdistrict_id;
+            $model->village_id = $request->village_id;
+
             $parent->participants()->save($model);
 
             DB::connection($model->connection)->commit();
@@ -135,12 +173,21 @@ class TrainingParticipant extends Model
      * @param [type] $model
      * @return void
      */
-    public static function updateRecord(Request $request, $model)
+    public static function updateRecord(Request $request, $model, $parent)
     {
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = sha1($parent->id . '-' . $request->nik);
+            $model->mode = $request->mode;
+            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember) : get_class(new TrainingOfficial);
+            $model->particiable_id = $request->particiable['value'];
+            $model->nik = $request->nik;
+            $model->phone = $request->phone;
+            $model->gender_id = $request->gender_id;
+            $model->subdistrict_id = $request->subdistrict_id;
+            $model->village_id = $request->village_id;
             $model->save();
 
             DB::connection($model->connection)->commit();

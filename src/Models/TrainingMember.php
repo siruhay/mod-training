@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Http\Resources\MemberResource;
 
@@ -58,137 +59,15 @@ class TrainingMember extends Model
     protected $defaultOrder = 'name';
 
     /**
-     * The model store method
+     * scopeForCombo function
      *
-     * @param Request $request
+     * @param Builder $query
      * @return void
      */
-    public static function storeRecord(Request $request)
+    public function scopeForCombo(Builder $query)
     {
-        $model = new static();
-
-        DB::connection($model->connection)->beginTransaction();
-
-        try {
-            // ...
-            $model->save();
-
-            DB::connection($model->connection)->commit();
-
-            return new MemberResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * The model update method
-     *
-     * @param Request $request
-     * @param [type] $model
-     * @return void
-     */
-    public static function updateRecord(Request $request, $model)
-    {
-        DB::connection($model->connection)->beginTransaction();
-
-        try {
-            // ...
-            $model->save();
-
-            DB::connection($model->connection)->commit();
-
-            return new MemberResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * The model delete method
-     *
-     * @param [type] $model
-     * @return void
-     */
-    public static function deleteRecord($model)
-    {
-        DB::connection($model->connection)->beginTransaction();
-
-        try {
-            $model->delete();
-
-            DB::connection($model->connection)->commit();
-
-            return new MemberResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * The model restore method
-     *
-     * @param [type] $model
-     * @return void
-     */
-    public static function restoreRecord($model)
-    {
-        DB::connection($model->connection)->beginTransaction();
-
-        try {
-            $model->restore();
-
-            DB::connection($model->connection)->commit();
-
-            return new MemberResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * The model destroy method
-     *
-     * @param [type] $model
-     * @return void
-     */
-    public static function destroyRecord($model)
-    {
-        DB::connection($model->connection)->beginTransaction();
-
-        try {
-            $model->forceDelete();
-
-            DB::connection($model->connection)->commit();
-
-            return new MemberResource($model);
-        } catch (\Exception $e) {
-            DB::connection($model->connection)->rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return $query
+            ->select('name AS title', 'id AS value', 'slug', 'phone', 'gender_id')
+            ->get();
     }
 }

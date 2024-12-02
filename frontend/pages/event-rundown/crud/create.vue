@@ -1,6 +1,6 @@
 <template>
 	<form-create with-helpdesk>
-		<template v-slot:default="{ record }">
+		<template v-slot:default="{ combos: { speakers }, record }">
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="6">
@@ -40,6 +40,7 @@
 
 					<v-col cols="12">
 						<v-select
+							:items="speakers"
 							label="Pembicara"
 							v-model="record.speaker_id"
 							hide-details

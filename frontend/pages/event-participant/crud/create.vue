@@ -2,7 +2,7 @@
 	<form-create with-helpdesk>
 		<template
 			v-slot:default="{
-				combos: { subdistricts, villages, particiables },
+				combos: { genders, subdistricts, villages, particiables },
 				record,
 				store,
 			}"
@@ -63,11 +63,15 @@
 							label="Name"
 							v-model="record.particiable"
 							hide-details
+							@update:modelValue="
+								updateParticiable($event, record)
+							"
 						></v-combobox>
 					</v-col>
 
 					<v-col cols="4">
 						<v-select
+							:items="genders"
 							label="Gender"
 							v-model="record.gender_id"
 							hide-details
@@ -107,6 +111,13 @@ export default {
 			record.phone = null;
 
 			this.updateVillage(record.village_id, record, store);
+		},
+
+		updateParticiable: function (particiable, record) {
+			record.gender_id = particiable.gender_id;
+			record.phone = particiable.phone;
+			record.nik = particiable.slug;
+			record.name = particiable.title;
 		},
 
 		updateSubdistrict: function (subdistrict, record, store) {

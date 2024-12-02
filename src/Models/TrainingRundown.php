@@ -59,6 +59,39 @@ class TrainingRundown extends Model
     protected $defaultOrder = 'name';
 
     /**
+     * mapCombos function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapCombos(Request $request): array
+    {
+        return [
+            'speakers' => TrainingCommittee::where('type', 'SPEAKER')->forCombo()
+        ];
+    }
+
+    /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'slug' => $model->slug,
+            'datemark' => $model->datemark,
+            'starttime' => $model->starttime,
+            'finishtime' => $model->finishtime,
+            'agenda' => $model->agenda,
+            'speaker_id' => $model->speaker_id,
+        ];
+    }
+
+    /**
      * The model store method
      *
      * @param Request $request
@@ -71,9 +104,8 @@ class TrainingRundown extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
-            $model->event_id = $request->event_id;
+            $model->name = $request->starttime . ' - ' . $request->finishtime;
+            $model->slug = sha1($parent->id . '-' . $request->datemark . '-' . $model->name);
             $model->datemark = $request->datemark;
             $model->starttime = $request->starttime;
             $model->finishtime = $request->finishtime;
@@ -101,14 +133,13 @@ class TrainingRundown extends Model
      * @param [type] $model
      * @return void
      */
-    public static function updateRecord(Request $request, $model)
+    public static function updateRecord(Request $request, $model, $parent)
     {
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
-            $model->event_id = $request->event_id;
+            $model->name = $request->starttime . ' - ' . $request->finishtime;
+            $model->slug = sha1($parent->id . '-' . $request->datemark . '-' . $model->name);
             $model->datemark = $request->datemark;
             $model->starttime = $request->starttime;
             $model->finishtime = $request->finishtime;

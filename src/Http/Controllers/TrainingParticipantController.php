@@ -77,7 +77,7 @@ class TrainingParticipantController extends Controller
 
         $request->validate([]);
 
-        return TrainingParticipant::updateRecord($request, $trainingParticipant);
+        return TrainingParticipant::updateRecord($request, $trainingParticipant, $trainingEvent);
     }
 
     /**
