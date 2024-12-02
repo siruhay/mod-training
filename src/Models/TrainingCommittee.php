@@ -5,13 +5,15 @@ namespace Module\Training\Models;
 use Illuminate\Http\Request;
 use Module\System\Traits\HasMeta;
 use Illuminate\Support\Facades\DB;
+use Module\System\Models\SystemUser;
 use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Module\Training\Models\TrainingEvent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Events\TrainingCommitteeUpdate;
-use Module\Training\Models\TrainingEvent;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Module\Training\Http\Resources\CommitteeResource;
 
 class TrainingCommittee extends Model
@@ -73,6 +75,16 @@ class TrainingCommittee extends Model
             'name' => $model->name,
             'type' => $model->type,
         ];
+    }
+
+    /**
+     * user function
+     *
+     * @return MorphOne
+     */
+    public function user(): MorphOne
+    {
+        return $this->morphOne(SystemUser::class, 'userable');
     }
 
     /**
