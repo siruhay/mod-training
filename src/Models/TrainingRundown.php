@@ -66,8 +66,10 @@ class TrainingRundown extends Model
      */
     public static function mapCombos(Request $request): array
     {
+        $event = TrainingEvent::find($request->segment(4));
+
         return [
-            'speakers' => TrainingCommittee::where('type', 'SPEAKER')->forCombo()
+            'speakers' => $event->committees()->where('type', 'SPEAKER')->forCombo()
         ];
     }
 
