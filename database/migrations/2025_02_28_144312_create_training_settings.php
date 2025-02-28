@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('slug', 18)->unique();
-            $table->enum('role', ['ADMIN', 'KADIS'])->index()->default('ADMIN');
+            $table->enum('role', ['ADMINISTRATOR', 'KADIS'])->index()->default('ADMINISTRATOR');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
