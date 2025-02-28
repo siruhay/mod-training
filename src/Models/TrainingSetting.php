@@ -70,7 +70,9 @@ class TrainingSetting extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->role = $request->role;
             $model->save();
 
             DB::connection($model->connection)->commit();
@@ -98,7 +100,9 @@ class TrainingSetting extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            // ...
+            $model->name = $request->name;
+            $model->slug = $request->slug;
+            $model->role = $request->role;
             $model->save();
 
             DB::connection($model->connection)->commit();
