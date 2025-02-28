@@ -674,6 +674,52 @@ export default {
 				),
 		},
 
+		// setting
+		{
+			path: "setting",
+			component: () =>
+				import(
+					/* webpackChunkName: "training" */ "@modules/training/frontend/pages/setting/index.vue"
+				),
+			children: [
+				{
+					path: "",
+					name: "training-setting",
+					component: () =>
+						import(
+							/* webpackChunkName: "training" */ "@modules/training/frontend/pages/setting/crud/data.vue"
+						),
+				},
+
+				{
+					path: "create",
+					name: "training-setting-create",
+					component: () =>
+						import(
+							/* webpackChunkName: "training" */ "@modules/training/frontend/pages/setting/crud/create.vue"
+						),
+				},
+
+				{
+					path: ":setting/edit",
+					name: "training-setting-edit",
+					component: () =>
+						import(
+							/* webpackChunkName: "training" */ "@modules/training/frontend/pages/setting/crud/edit.vue"
+						),
+				},
+
+				{
+					path: ":setting/show",
+					name: "training-setting-show",
+					component: () =>
+						import(
+							/* webpackChunkName: "training" */ "@modules/training/frontend/pages/setting/crud/show.vue"
+						),
+				},
+			],
+		},
+
 		// subdistrict
 		{
 			path: "subdistrict",

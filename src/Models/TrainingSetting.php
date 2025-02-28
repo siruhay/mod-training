@@ -5,18 +5,14 @@ namespace Module\Training\Models;
 use Illuminate\Http\Request;
 use Module\System\Traits\HasMeta;
 use Illuminate\Support\Facades\DB;
-use Module\System\Models\SystemUser;
 use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
-use Module\Training\Models\TrainingEvent;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Training\Events\TrainingCommitteeUpdate;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Module\Training\Http\Resources\CommitteeResource;
+use Module\Training\Http\Resources\SettingResource;
 
-class TrainingCommittee extends Model
+class TrainingSetting extends Model
 {
     use Filterable;
     use HasMeta;
@@ -36,14 +32,14 @@ class TrainingCommittee extends Model
      *
      * @var string
      */
-    protected $table = 'training_committees';
+    protected $table = 'training_settings';
 
     /**
      * The roles variable
      *
      * @var array
      */
-    protected $roles = ['training-committee'];
+    protected $roles = ['training-setting'];
 
     /**
      * The attributes that should be cast to native types.
@@ -62,97 +58,24 @@ class TrainingCommittee extends Model
     protected $defaultOrder = 'name';
 
     /**
-     * mapHeaders function
-     *
-     * readonly value?: SelectItemKey<any>
-     * readonly title?: string | undefined
-     * readonly align?: 'start' | 'end' | 'center' | undefined
-     * readonly width?: string | number | undefined
-     * readonly minWidth?: string | undefined
-     * readonly maxWidth?: string | undefined
-     * readonly nowrap?: boolean | undefined
-     * readonly sortable?: boolean | undefined
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapHeaders(Request $request): array
-    {
-        return [
-            ['title' => 'N.I.K', 'value' => 'slug'],
-            ['title' => 'Name', 'value' => 'name'],
-            ['title' => 'Updated', 'value' => 'updated_at', 'sortable' => false, 'width' => '170'],
-        ];
-    }
-
-    /**
-     * mapResource function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapResource(Request $request, $model): array
-    {
-        return [
-            'id' => $model->id,
-            'name' => $model->name,
-            'slug' => $model->slug,
-
-            'subtitle' => (string) $model->updated_at,
-            'updated_at' => (string) $model->updated_at,
-        ];
-    }
-
-    /**
-     * mapResourceShow function
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function mapResourceShow(Request $request, $model): array
-    {
-        return [
-            'id' => $model->id,
-            'slug' => $model->slug,
-            'name' => $model->name,
-            'type' => $model->type,
-        ];
-    }
-
-    /**
-     * user function
-     *
-     * @return MorphOne
-     */
-    public function user(): MorphOne
-    {
-        return $this->morphOne(SystemUser::class, 'userable');
-    }
-
-    /**
      * The model store method
      *
      * @param Request $request
      * @return void
      */
-    public static function storeRecord(Request $request, TrainingEvent $parent)
+    public static function storeRecord(Request $request)
     {
         $model = new static();
 
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
-            $model->type = $request->type;
-
-            $parent->committees()->save($model);
-
-            TrainingCommitteeUpdate::dispatch($model);
+            // ...
+            $model->save();
 
             DB::connection($model->connection)->commit();
 
-            return new CommitteeResource($model);
+            return new SettingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -175,16 +98,12 @@ class TrainingCommittee extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
-            $model->type = $request->type;
+            // ...
             $model->save();
-
-            TrainingCommitteeUpdate::dispatch($model);
 
             DB::connection($model->connection)->commit();
 
-            return new CommitteeResource($model);
+            return new SettingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -210,7 +129,7 @@ class TrainingCommittee extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new CommitteeResource($model);
+            return new SettingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -236,7 +155,7 @@ class TrainingCommittee extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new CommitteeResource($model);
+            return new SettingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 
@@ -262,7 +181,7 @@ class TrainingCommittee extends Model
 
             DB::connection($model->connection)->commit();
 
-            return new CommitteeResource($model);
+            return new SettingResource($model);
         } catch (\Exception $e) {
             DB::connection($model->connection)->rollBack();
 

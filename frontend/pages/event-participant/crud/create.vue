@@ -18,10 +18,7 @@
 								updateMode($event, record, store)
 							"
 						>
-							<v-radio
-								label="LKD"
-								value="LKD"
-							></v-radio>
+							<v-radio label="LKD" value="LKD"></v-radio>
 
 							<v-radio
 								class="ml-4"

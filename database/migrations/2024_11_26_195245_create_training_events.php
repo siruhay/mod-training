@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('slug', 40)->unique();
             $table->date('startdate')->index();
             $table->date('finishdate')->index();
+            $table->enum('mode', ['LKD', 'DESA'])->index()->default('LKD');
             $table->foreignId('village_id')->nullable();
             $table->foreignId('subdistrict_id')->nullable();
             $table->foreignId('regency_id')->nullable();
             $table->foreignId('officer_id')->nullable();
+            $table->enum('status', ['DRAFTED', 'PUBLISHED', 'PRETEST', 'RUNNING', 'POSTEST', 'CERTIFICATE', 'COMPLETED'])->index()->default('DRAFTED');
             $table->jsonb('files')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();

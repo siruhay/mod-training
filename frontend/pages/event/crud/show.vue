@@ -1,64 +1,76 @@
 <template>
 	<form-show with-helpdesk>
 		<template
-			v-slot:default="{
-				combos: { subdistricts, villages },
-				record,
-				store,
-			}"
+			v-slot:default="{ combos: { subdistricts, villages }, record }"
 		>
+			<div class="position-absolute" style="top: 0; right: 0">
+				<v-chip class="mt-3 mr-4" color="blue" size="small">{{
+					record.status
+				}}</v-chip>
+			</div>
+
 			<v-card-text>
 				<v-row dense>
-					<v-row dense>
-						<v-col cols="12">
-							<v-text-field
-								label="Name"
-								v-model="record.name"
-								hide-details
-								readonly
-							></v-text-field>
-						</v-col>
+					<v-col cols="12">
+						<v-text-field
+							label="Name"
+							v-model="record.name"
+							hide-details
+							readonly
+						></v-text-field>
+					</v-col>
 
-						<v-col cols="6">
-							<v-text-field
-								label="Mulai"
-								type="date"
-								v-model="record.startdate"
-								hide-details
-								readonly
-							></v-text-field>
-						</v-col>
+					<v-col cols="4">
+						<v-text-field
+							label="Mulai"
+							type="date"
+							v-model="record.startdate"
+							hide-details
+							readonly
+						></v-text-field>
+					</v-col>
 
-						<v-col cols="6">
-							<v-text-field
-								label="Selesai"
-								type="date"
-								v-model="record.finishdate"
-								hide-details
-								readonly
-							></v-text-field>
-						</v-col>
+					<v-col cols="4">
+						<v-text-field
+							label="Selesai"
+							type="date"
+							v-model="record.finishdate"
+							hide-details
+							readonly
+						></v-text-field>
+					</v-col>
 
-						<v-col cols="12">
-							<v-combobox
-								:items="subdistricts"
-								label="Kecamatan"
-								v-model="record.subdistrict_id"
-								hide-details
-								readonly
-							></v-combobox>
-						</v-col>
+					<v-col cols="4">
+						<v-select
+							:items="['LKD', 'DESA']"
+							label="Target"
+							v-model="record.mode"
+							hide-details
+							readonly
+						></v-select>
+					</v-col>
 
-						<v-col cols="12">
-							<v-combobox
-								:items="villages"
-								label="Kelurahan/Desa"
-								v-model="record.village_id"
-								hide-details
-								readonly
-							></v-combobox>
-						</v-col>
-					</v-row>
+					<v-col cols="6">
+						<v-combobox
+							:items="subdistricts"
+							:return-object="false"
+							label="Kecamatan"
+							v-model="record.subdistrict_id"
+							hide-details
+							readonly
+						></v-combobox>
+					</v-col>
+
+					<v-col cols="6">
+						<v-combobox
+							:items="villages"
+							:return-object="false"
+							label="Kelurahan/Desa"
+							v-model="record.village_id"
+							hide-details
+							readonly
+						></v-combobox>
+					</v-col>
 				</v-row>
 			</v-card-text>
 		</template>

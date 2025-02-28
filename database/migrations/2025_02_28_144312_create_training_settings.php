@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_committees', function (Blueprint $table) {
+        Schema::create('training_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 200)->index();
-            $table->string('slug', 40)->unique();
-            $table->enum('type', ['MODERATOR', 'FELLOW', 'SPEAKER'])->index()->default('FELLOW');
-            $table->foreignId('event_id');
+            $table->string('name')->index();
+            $table->string('slug', 18)->unique();
+            $table->enum('role', ['ADMIN', 'KADIS'])->index()->default('ADMIN');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_committees');
+        Schema::dropIfExists('training_settings');
     }
 };

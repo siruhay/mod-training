@@ -75,6 +75,27 @@ class TrainingEvent extends Model
     }
 
     /**
+     * mapRecordBase function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapRecordBase(Request $request): array
+    {
+        return [
+            'id'                => null,
+            'name'              => null,
+            'startdate'         => null,
+            'finishdate'        => null,
+            'village_id'        => null,
+            'subdistrict_id'    => null,
+            'regency_id'        => null,
+            'mode'              => null,
+            'status'            => null,
+        ];
+    }
+
+    /**
      * mapResourceShow function
      *
      * @param Request $request
@@ -86,11 +107,13 @@ class TrainingEvent extends Model
             'id'                => $model->id,
             'name'              => $model->name,
             'slug'              => $model->slug,
+            'mode'              => $model->mode,
             'startdate'         => $model->startdate,
             'finishdate'        => $model->finishdate,
             'village_id'        => $model->village_id,
             'subdistrict_id'    => $model->subdistrict_id,
             'regency_id'        => $model->regency_id,
+            'status'            => $model->status,
         ];
     }
 
@@ -155,6 +178,8 @@ class TrainingEvent extends Model
             $model->village_id = optional($village)->id;
             $model->subdistrict_id = optional($village)->district_id;
             $model->regency_id = optional($village)->regency_id;
+            $model->mode = $request->mode;
+            $model->status = 'DRAFTED';
             $model->save();
 
             DB::connection($model->connection)->commit();

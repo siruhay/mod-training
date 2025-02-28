@@ -7,6 +7,7 @@ use Module\Training\Http\Controllers\TrainingHistoryController;
 use Module\Training\Http\Controllers\TrainingPostestController;
 use Module\Training\Http\Controllers\TrainingPretestController;
 use Module\Training\Http\Controllers\TrainingRundownController;
+use Module\Training\Http\Controllers\TrainingSettingController;
 use Module\Training\Http\Controllers\TrainingVillageController;
 use Module\Training\Http\Controllers\TrainingPresenceController;
 use Module\Training\Http\Controllers\TrainingCommitteeController;
@@ -110,3 +111,6 @@ Route::resource('subdistrict.village', TrainingVillageController::class)
         'subdistrict' => 'trainingSubdistrict',
         'village' => 'trainingVillage'
     ]);
+
+Route::resource('setting', TrainingSettingController::class)
+    ->parameters(['setting' => 'trainingSetting']);

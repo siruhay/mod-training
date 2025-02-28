@@ -17,7 +17,7 @@
 						></v-text-field>
 					</v-col>
 
-					<v-col cols="6">
+					<v-col cols="4">
 						<v-text-field
 							label="Mulai"
 							type="date"
@@ -26,7 +26,7 @@
 						></v-text-field>
 					</v-col>
 
-					<v-col cols="6">
+					<v-col cols="4">
 						<v-text-field
 							label="Selesai"
 							type="date"
@@ -35,7 +35,16 @@
 						></v-text-field>
 					</v-col>
 
-					<v-col cols="12">
+					<v-col cols="4">
+						<v-select
+							:items="['LKD', 'DESA']"
+							label="Target"
+							v-model="record.mode"
+							hide-details
+						></v-select>
+					</v-col>
+
+					<v-col cols="6">
 						<v-combobox
 							:items="subdistricts"
 							:return-object="false"
@@ -48,7 +57,7 @@
 						></v-combobox>
 					</v-col>
 
-					<v-col cols="12">
+					<v-col cols="6">
 						<v-combobox
 							:items="villages"
 							:return-object="false"
