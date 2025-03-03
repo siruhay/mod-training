@@ -75,12 +75,12 @@
 			</v-card-text>
 		</template>
 
-		<template v-slot:info="{ theme }">
+		<template v-slot:info="{ record, theme }">
 			<div class="text-overline mt-4">Aksi</div>
 			<v-divider class="mb-3"></v-divider>
 
 			<v-row dense>
-				<v-col cols="6">
+				<v-col cols="4">
 					<v-btn
 						:color="theme"
 						variant="flat"
@@ -90,7 +90,7 @@
 					>
 				</v-col>
 
-				<v-col cols="6">
+				<v-col cols="4">
 					<v-btn
 						:color="theme"
 						variant="flat"
@@ -100,23 +100,23 @@
 					>
 				</v-col>
 
-				<v-col cols="6">
-					<v-btn
-						:color="theme"
-						variant="flat"
-						block
-						@click="$router.push({ name: 'training-presence' })"
-						>absensi</v-btn
-					>
-				</v-col>
-
-				<v-col cols="6">
+				<v-col cols="4">
 					<v-btn
 						:color="theme"
 						variant="flat"
 						block
 						@click="$router.push({ name: 'training-rundown' })"
 						>rundown</v-btn
+					>
+				</v-col>
+
+				<v-col cols="12" v-if="record.status === 'DRAFTED'">
+					<v-btn
+						color="deep-orange"
+						variant="flat"
+						block
+						@click="post"
+						>KIRIM PERMOHONAN</v-btn
 					>
 				</v-col>
 			</v-row>

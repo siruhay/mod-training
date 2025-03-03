@@ -308,9 +308,9 @@ Rundown</bpmn:text>
     <bpmn:sequenceFlow id="Flow_154bov0" sourceRef="Activity_1ftyaug" targetRef="Activity_0skma1e" />
     <bpmn:sequenceFlow id="Flow_1f6gc0j" sourceRef="Activity_0ohu3yo" targetRef="Activity_0o9vx6r" />
     <bpmn:sequenceFlow id="Flow_13y8byc" sourceRef="Activity_0vgp0v9" targetRef="Activity_0ohu3yo" />
-    <bpmn:sequenceFlow id="Flow_1vd0p1l" sourceRef="Activity_0e0su5p" targetRef="Activity_0vgp0v9" />
-    <bpmn:sequenceFlow id="Flow_0hvgcs6" name="Draft" sourceRef="Activity_0vgp0v9" targetRef="Event_0jw0f3g" />
-    <bpmn:sequenceFlow id="Flow_1rrmrc8" name="Publish" sourceRef="Event_0jw0f3g" targetRef="Event_002234s" />
+    <bpmn:sequenceFlow id="Flow_1vd0p1l" name="DRAFTED" sourceRef="Activity_0e0su5p" targetRef="Activity_0vgp0v9" />
+    <bpmn:sequenceFlow id="Flow_0hvgcs6" name="SIGNED" sourceRef="Activity_0vgp0v9" targetRef="Event_0jw0f3g" />
+    <bpmn:sequenceFlow id="Flow_1rrmrc8" name="PUBLISHED" sourceRef="Event_0jw0f3g" targetRef="Event_002234s" />
     <bpmn:sequenceFlow id="Flow_14fue77" name="Pretest" sourceRef="Event_002234s" targetRef="Event_18lb3yo" />
     <bpmn:sequenceFlow id="Flow_06j8xwz" name="Pelaksanaan" sourceRef="Event_18lb3yo" targetRef="Event_1oijd1u" />
     <bpmn:sequenceFlow id="Flow_05dmh7y" name="Postest" sourceRef="Event_1oijd1u" targetRef="Event_1wd5qjg" />
@@ -654,19 +654,22 @@ Rundown</bpmn:text>
       <bpmndi:BPMNEdge id="Flow_1vd0p1l_di" bpmnElement="Flow_1vd0p1l">
         <di:waypoint x="400" y="150" />
         <di:waypoint x="550" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="449" y="132" width="52" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0hvgcs6_di" bpmnElement="Flow_0hvgcs6">
         <di:waypoint x="650" y="150" />
         <di:waypoint x="712" y="150" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="669" y="132" width="24" height="14" />
+          <dc:Bounds x="660" y="132" width="43" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rrmrc8_di" bpmnElement="Flow_1rrmrc8">
         <di:waypoint x="748" y="150" />
         <di:waypoint x="1192" y="150" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="952" y="132" width="37" height="14" />
+          <dc:Bounds x="939" y="132" width="63" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14fue77_di" bpmnElement="Flow_14fue77">
