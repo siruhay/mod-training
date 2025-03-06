@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Http\Resources\EventResource;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TrainingEvent extends Model
 {
@@ -49,7 +50,9 @@ class TrainingEvent extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'meta' => 'array'
+        'meta' => 'array',
+        'startdate' => 'date:Y-m-d',
+        'finishdate' => 'date:Y-m-d'
     ];
 
     /**
@@ -181,6 +184,26 @@ class TrainingEvent extends Model
     public function rundowns(): HasMany
     {
         return $this->hasMany(TrainingRundown::class, 'event_id');
+    }
+
+    /**
+     * subdistrict function
+     *
+     * @return BelongsTo
+     */
+    public function subdistrict(): BelongsTo
+    {
+        return $this->belongsTo(TrainingSubdistrict::class, 'subdistrict_id');
+    }
+
+    /**
+     * village function
+     *
+     * @return BelongsTo
+     */
+    public function village(): BelongsTo
+    {
+        return $this->belongsTo(TrainingVillage::class, 'village_id');
     }
 
     /**

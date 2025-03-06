@@ -9,6 +9,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Module\Training\Models\TrainingEvent;
 use Module\Reference\Models\ReferenceGender;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -127,6 +128,36 @@ class TrainingParticipant extends Model
             'subdistrict_id' => $model->subdistrict_id,
             'village_id' => $model->village_id,
         ];
+    }
+
+    /**
+     * event function
+     *
+     * @return BelongsTo
+     */
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(TrainingEvent::class, 'event_id');
+    }
+
+    /**
+     * subdistrict function
+     *
+     * @return BelongsTo
+     */
+    public function subdistrict(): BelongsTo
+    {
+        return $this->belongsTo(TrainingSubdistrict::class, 'subdistrict_id');
+    }
+
+    /**
+     * village function
+     *
+     * @return BelongsTo
+     */
+    public function village(): BelongsTo
+    {
+        return $this->belongsTo(TrainingVillage::class, 'village_id');
     }
 
     /**
