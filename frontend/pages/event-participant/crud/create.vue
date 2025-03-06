@@ -10,25 +10,6 @@
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="12">
-						<v-radio-group
-							v-model="record.mode"
-							hide-details
-							inline
-							@update:modelValue="
-								updateMode($event, record, store)
-							"
-						>
-							<v-radio label="LKD" value="LKD"></v-radio>
-
-							<v-radio
-								class="ml-4"
-								label="Desa"
-								value="Desa"
-							></v-radio>
-						</v-radio-group>
-					</v-col>
-
-					<v-col cols="12">
 						<v-combobox
 							:items="subdistricts"
 							:return-object="false"
@@ -101,15 +82,6 @@ export default {
 	name: "training-participant-create",
 
 	methods: {
-		updateMode: function (mode, record, store) {
-			record.particiable = null;
-			record.gender_id = null;
-			record.nik = null;
-			record.phone = null;
-
-			this.updateVillage(record.village_id, record, store);
-		},
-
 		updateParticiable: function (particiable, record) {
 			record.gender_id = particiable.gender_id;
 			record.phone = particiable.phone;

@@ -59,6 +59,7 @@ Rundown</bpmn:text>
         <bpmn:flowNodeRef>Activity_1ut3nv2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ohxpvk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1qqkz6m</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0pgghuv</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0twhqos" name="PESERTA">
         <bpmn:flowNodeRef>Activity_0whfk84</bpmn:flowNodeRef>
@@ -153,7 +154,7 @@ Rundown</bpmn:text>
       <bpmn:outgoing>Flow_05dmh7y</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0mrfw38" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:task id="Activity_0o771ma" name="Lengkapi Materi dan Rundown">
+    <bpmn:task id="Activity_0o771ma" name="Lengkapi Materi, Rundown dan Test (pre &#38; pos)">
       <bpmn:incoming>Flow_0952jxy</bpmn:incoming>
       <bpmn:incoming>Flow_0k477vf</bpmn:incoming>
       <bpmn:outgoing>Flow_0sc78xw</bpmn:outgoing>
@@ -161,6 +162,7 @@ Rundown</bpmn:text>
     <bpmn:sendTask id="Activity_02qp2j8" name="Kirim Materi dan Rundown">
       <bpmn:incoming>Flow_0sc78xw</bpmn:incoming>
       <bpmn:outgoing>Flow_0jc9hdt</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1v6aakp</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:receiveTask id="Activity_146uxcx" name="Terima Jabawan Pretest">
       <bpmn:incoming>Flow_128nc5m</bpmn:incoming>
@@ -203,6 +205,7 @@ Rundown</bpmn:text>
     </bpmn:task>
     <bpmn:task id="Activity_0rc7iuv" name="Terima Pretest dan Rundown">
       <bpmn:incoming>Flow_0kjr9ey</bpmn:incoming>
+      <bpmn:incoming>Flow_0eq9244</bpmn:incoming>
       <bpmn:outgoing>Flow_09aonct</bpmn:outgoing>
       <bpmn:outgoing>Flow_0hrqfnf</bpmn:outgoing>
     </bpmn:task>
@@ -350,6 +353,12 @@ Rundown</bpmn:text>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0y1ry0u" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0l7l6mw" sourceRef="Activity_146uxcx" targetRef="Event_18lb3yo" />
+    <bpmn:sequenceFlow id="Flow_1v6aakp" sourceRef="Activity_02qp2j8" targetRef="Activity_0pgghuv" />
+    <bpmn:task id="Activity_0pgghuv" name="Kirim Pretest dan Postest">
+      <bpmn:incoming>Flow_1v6aakp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eq9244</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0eq9244" sourceRef="Activity_0pgghuv" targetRef="Activity_0rc7iuv" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_156fghh">
@@ -544,6 +553,10 @@ Rundown</bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1nxwhvh_di" bpmnElement="Event_18lb3yo">
         <dc:Bounds x="1782" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pgghuv_di" bpmnElement="Activity_0pgghuv">
+        <dc:Bounds x="1160" y="630" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1k8glut_di" bpmnElement="Flow_1k8glut">
         <di:waypoint x="730" y="970" />
@@ -828,6 +841,15 @@ Rundown</bpmn:text>
       <bpmndi:BPMNEdge id="Flow_0l7l6mw_di" bpmnElement="Flow_0l7l6mw">
         <di:waypoint x="1800" y="630" />
         <di:waypoint x="1800" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v6aakp_di" bpmnElement="Flow_1v6aakp">
+        <di:waypoint x="1120" y="670" />
+        <di:waypoint x="1160" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eq9244_di" bpmnElement="Flow_0eq9244">
+        <di:waypoint x="1260" y="670" />
+        <di:waypoint x="1540" y="670" />
+        <di:waypoint x="1540" y="770" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0u5yh2r_di" bpmnElement="TextAnnotation_0u5yh2r">
         <dc:Bounds x="450" y="233" width="130" height="127" />

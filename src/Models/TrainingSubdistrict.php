@@ -9,8 +9,11 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Module\Reference\Models\ReferenceRegency;
 use Module\Training\Http\Resources\SubdistrictResource;
 
 class TrainingSubdistrict extends Model
@@ -56,7 +59,89 @@ class TrainingSubdistrict extends Model
      *
      * @var string
      */
-    protected $defaultOrder = 'name';
+    protected $defaultOrder = ['regency_id:asc', 'name:asc'];
+
+    /**
+     * booted function
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('onlyProcessed', function (Builder $query) {
+            $query->where('regency_id', 3);
+        });
+    }
+
+    /**
+     * mapStatuses function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapStatuses(Request $request): array
+    {
+        return [
+            'canCreate' => false,
+            'canEdit' => false,
+            'canUpdate' => false,
+            'canDelete' => false,
+            'canRestore' => false,
+            'canDestroy' => false,
+        ];
+    }
+
+    /**
+     * mapHeaders function
+     *
+     * readonly value?: SelectItemKey<any>
+     * readonly title?: string | undefined
+     * readonly align?: 'start' | 'end' | 'center' | undefined
+     * readonly width?: string | number | undefined
+     * readonly minWidth?: string | undefined
+     * readonly maxWidth?: string | undefined
+     * readonly nowrap?: boolean | undefined
+     * readonly sortable?: boolean | undefined
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapHeaders(Request $request): array
+    {
+        return [
+            ['title' => 'Nama', 'value' => 'name'],
+            ['title' => 'Kota/Kab', 'value' => 'regencyname'],
+            ['title' => 'Updated', 'value' => 'updated_at', 'sortable' => false, 'width' => '170'],
+        ];
+    }
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'regencyname' => optional($model->regency)->type . ' - ' . optional($model->regency)->name,
+
+            'subtitle' => (string) $model->updated_at,
+            'updated_at' => (string) $model->updated_at,
+        ];
+    }
+
+    /**
+     * regency function
+     *
+     * @return BelongsTo
+     */
+    public function regency(): BelongsTo
+    {
+        return $this->belongsTo(ReferenceRegency::class, 'regency_id');
+    }
 
     /**
      * villages function

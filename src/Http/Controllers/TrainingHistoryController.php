@@ -21,7 +21,8 @@ class TrainingHistoryController extends Controller
         Gate::authorize('view', TrainingEvent::class);
 
         return new EventCollection(
-            TrainingEvent::applyMode($request->mode)
+            TrainingEvent::onlyHistory()
+                ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)
                 ->sortBy($request->sortBy)

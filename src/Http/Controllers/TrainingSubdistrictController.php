@@ -21,7 +21,8 @@ class TrainingSubdistrictController extends Controller
         Gate::authorize('view', TrainingSubdistrict::class);
 
         return new SubdistrictCollection(
-            TrainingSubdistrict::applyMode($request->mode)
+            TrainingSubdistrict::with(['regency'])
+                ->applyMode($request->mode)
                 ->filter($request->filters)
                 ->search($request->findBy)
                 ->sortBy($request->sortBy)

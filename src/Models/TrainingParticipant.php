@@ -9,9 +9,9 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Module\Reference\Models\ReferenceGender;
 use Module\Training\Models\TrainingEvent;
+use Module\Reference\Models\ReferenceGender;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Http\Resources\ParticipantResource;
 
 class TrainingParticipant extends Model
@@ -89,10 +89,12 @@ class TrainingParticipant extends Model
      */
     public static function mapRecordBase(Request $request): array
     {
+        $event = TrainingEvent::find($request->segment(4));
+
         return [
             'id' => null,
             'name' => null,
-            'mode' => 'LKD',
+            'mode' => $event->mode,
             'particiable' => null,
             'nik' => null,
             'phone' => null,
@@ -143,7 +145,7 @@ class TrainingParticipant extends Model
             $model->name = $request->name;
             $model->slug = sha1($parent->id . '-' . $request->nik);
             $model->mode = $request->mode;
-            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember) : get_class(new TrainingOfficial);
+            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember()) : get_class(new TrainingOfficial());
             $model->particiable_id = $request->particiable['value'];
             $model->nik = $request->nik;
             $model->phone = $request->phone;
@@ -181,7 +183,7 @@ class TrainingParticipant extends Model
             $model->name = $request->name;
             $model->slug = sha1($parent->id . '-' . $request->nik);
             $model->mode = $request->mode;
-            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember) : get_class(new TrainingOfficial);
+            $model->particiable_type = $request->mode === 'LKD' ? get_class(new TrainingMember()) : get_class(new TrainingOfficial());
             $model->particiable_id = $request->particiable['value'];
             $model->nik = $request->nik;
             $model->phone = $request->phone;

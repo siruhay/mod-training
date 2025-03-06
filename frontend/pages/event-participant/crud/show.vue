@@ -9,26 +9,6 @@
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="12">
-						<v-radio-group
-							v-model="record.mode"
-							hide-details
-							inline
-							readonly
-						>
-							<v-radio
-								label="LKD"
-								value="LKD"
-							></v-radio>
-
-							<v-radio
-								class="ml-4"
-								label="Desa"
-								value="Desa"
-							></v-radio>
-						</v-radio-group>
-					</v-col>
-
-					<v-col cols="12">
 						<v-combobox
 							:items="subdistricts"
 							:return-object="false"

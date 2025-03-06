@@ -112,12 +112,43 @@
 
 				<v-col cols="12" v-if="record.status === 'DRAFTED'">
 					<v-btn
+						:disabled="
+							!(
+								record.hasCommittee &&
+								record.hasParticipant &&
+								record.hasRundown
+							)
+						"
 						color="deep-orange"
 						variant="flat"
 						block
-						@click="post"
+						@click="postSubmission(record)"
 						>KIRIM PERMOHONAN</v-btn
 					>
+				</v-col>
+
+				<v-col cols="12" v-if="record.status === 'SUBMITTED'">
+					<v-row dense>
+						<v-col cols="6">
+							<v-btn
+								color="deep-orange"
+								variant="flat"
+								block
+								@click="postRejected(record)"
+								>TOLAK</v-btn
+							>
+						</v-col>
+
+						<v-col cols="6">
+							<v-btn
+								color="green"
+								variant="flat"
+								block
+								@click="postAssigned(record)"
+								>SETUJUI</v-btn
+							>
+						</v-col>
+					</v-row>
 				</v-col>
 			</v-row>
 		</template>
@@ -127,5 +158,16 @@
 <script>
 export default {
 	name: "training-event-show",
+
+	methods: {
+		postSubmission: function (record) {
+			this.$http(`training/api/event/${record.id}/submission`, {
+				method: "POST",
+				params: record,
+			}).then(() => {
+				this.$router.push({ name: "training-event" });
+			});
+		},
+	},
 };
 </script>
