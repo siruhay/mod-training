@@ -34,9 +34,9 @@ class DashboardController extends Controller
         switch ($request->type) {
             case 'participant':
                 if ($request->subdistrict) {
-                    $records = TrainingParticipant::with(['subdistrict', 'village'])->where('subdistrict_id', $request->subdistrict)->get();
+                    $records = TrainingParticipant::with(['event', 'subdistrict', 'village'])->where('subdistrict_id', $request->subdistrict)->get();
                 } else {
-                    $records = TrainingParticipant::with(['subdistrict', 'village'])->get();
+                    $records = TrainingParticipant::with(['event', 'subdistrict', 'village'])->get();
                 }
 
                 return [

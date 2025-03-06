@@ -19,6 +19,7 @@
 							:items="subdistricts"
 							label="Kecamatan"
 							v-model="record.subdistrict"
+							clearable
 							hide-details
 						></v-select>
 					</v-col>
@@ -59,7 +60,7 @@ export default {
 
 	methods: {
 		getReportPreview: function (record) {
-			this.$http(`foundation/api/report`, {
+			this.$http(`training/api/report`, {
 				method: "GET",
 				params: record,
 			}).then((response) => {
