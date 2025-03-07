@@ -16,7 +16,7 @@ class TrainingEventPolicy
         if ($user->hasLicenseAs('training-superadmin')) {
             return true;
         }
-    
+
         return null;
     }
 
@@ -50,6 +50,17 @@ class TrainingEventPolicy
     public function update(SystemUser $user, TrainingEvent $trainingEvent): bool
     {
         return $user->hasPermission('update-training-event');
+    }
+
+    /**
+     * Determine whether the user can submission the model.
+     */
+    public function submission(SystemUser $user, TrainingEvent $trainingEvent): bool
+    {
+        return
+            $user->hasLicenseAs('training-administrator') &&
+            $trainingEvent->status === 'DRAFTED' || $trainingEvent->status === 'REPAIRED' &&
+            $user->hasPermission('update-training-event');
     }
 
     /**

@@ -100,6 +100,69 @@ class TrainingEvent extends Model
     }
 
     /**
+     * mapStatuses function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapStatuses(Request $request, $model = null): array
+    {
+        return [
+            'canCreate' => $request->user()->hasLicenseAs('training-administrator'),
+            'canEdit' => true,
+            'canUpdate' => true,
+            'canDelete' => $request->user()->hasLicenseAs('training-administrator') && optional($model)->status === 'DRAFTED',
+            'canRestore' => false,
+            'canDestroy' => false,
+
+            'isAdministrator' => $request->user()->hasLicenseAs('training-administrator'),
+            'isOfficer' => $request->user()->hasLicenseAs('training-officer')
+        ];
+    }
+
+    /**
+     * mapHeaders function
+     *
+     * readonly value?: SelectItemKey<any>
+     * readonly title?: string | undefined
+     * readonly align?: 'start' | 'end' | 'center' | undefined
+     * readonly width?: string | number | undefined
+     * readonly minWidth?: string | undefined
+     * readonly maxWidth?: string | undefined
+     * readonly nowrap?: boolean | undefined
+     * readonly sortable?: boolean | undefined
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapHeaders(Request $request): array
+    {
+        return [
+            ['title' => 'Name', 'value' => 'name'],
+            ['title' => 'Status', 'value' => 'status'],
+            ['title' => 'Updated', 'value' => 'updated_at', 'sortable' => false, 'width' => '170'],
+        ];
+    }
+
+    /**
+     * mapResource function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResource(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'status' => $model->status,
+
+            'subtitle' => (string) $model->updated_at,
+            'updated_at' => (string) $model->updated_at,
+        ];
+    }
+
+    /**
      * mapResourceShow function
      *
      * @param Request $request
@@ -265,6 +328,34 @@ class TrainingEvent extends Model
             $model->village_id = optional($village)->id;
             $model->subdistrict_id = optional($village)->district_id;
             $model->regency_id = optional($village)->regency_id;
+            $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new EventResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * The model update method
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function submissionRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            $model->status = 'SUBMITTED';
             $model->save();
 
             DB::connection($model->connection)->commit();

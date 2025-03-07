@@ -21,7 +21,7 @@
 
 					<v-col cols="4">
 						<v-select
-							:items="['ADMINISTRATOR', 'KADIS']"
+							:items="['ADMINISTRATOR', 'OFFICER']"
 							label="Role"
 							v-model="record.role"
 							hide-details

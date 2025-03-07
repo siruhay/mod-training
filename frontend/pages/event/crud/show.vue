@@ -75,7 +75,13 @@
 			</v-card-text>
 		</template>
 
-		<template v-slot:info="{ record, theme }">
+		<template
+			v-slot:info="{
+				statuses: { isAdministrator, isOfficer },
+				record,
+				theme,
+			}"
+		>
 			<div class="text-overline mt-4">Aksi</div>
 			<v-divider class="mb-3"></v-divider>
 
@@ -110,7 +116,10 @@
 					>
 				</v-col>
 
-				<v-col cols="12" v-if="record.status === 'DRAFTED'">
+				<v-col
+					cols="12"
+					v-if="isAdministrator && record.status === 'DRAFTED'"
+				>
 					<v-btn
 						:disabled="
 							!(
@@ -127,7 +136,10 @@
 					>
 				</v-col>
 
-				<v-col cols="12" v-if="record.status === 'SUBMITTED'">
+				<v-col
+					cols="12"
+					v-if="isOfficer && record.status === 'SUBMITTED'"
+				>
 					<v-row dense>
 						<v-col cols="6">
 							<v-btn

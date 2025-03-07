@@ -75,6 +75,22 @@ class TrainingEventController extends Controller
     }
 
     /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param TrainingEvent $trainingEvent
+     * @return void
+     */
+    public function submission(Request $request, TrainingEvent $trainingEvent)
+    {
+        Gate::authorize('submission', $trainingEvent);
+
+        $request->validate([]);
+
+        return TrainingEvent::submissionRecord($request, $trainingEvent);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \Module\Training\Models\TrainingEvent $trainingEvent

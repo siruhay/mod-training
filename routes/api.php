@@ -23,6 +23,7 @@ use Module\Training\Http\Controllers\TrainingHistoryParticipantController;
 Route::get('dashboard', [DashboardController::class, 'index']);
 Route::get('report', [DashboardController::class, 'report']);
 
+Route::post('event/{trainingEvent}/submission', [TrainingEventController::class, 'submission']);
 Route::resource('event', TrainingEventController::class)
     ->parameters(['event' => 'trainingEvent']);
 

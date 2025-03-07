@@ -5,12 +5,15 @@ namespace Module\Training\Models;
 use Illuminate\Http\Request;
 use Module\System\Traits\HasMeta;
 use Illuminate\Support\Facades\DB;
+use Module\System\Models\SystemUser;
 use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Module\Training\Events\TrainingSettingUpdate;
 use Module\Training\Http\Resources\SettingResource;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class TrainingSetting extends Model
 {
@@ -58,6 +61,16 @@ class TrainingSetting extends Model
     protected $defaultOrder = 'name';
 
     /**
+     * user function
+     *
+     * @return MorphOne
+     */
+    public function user(): MorphOne
+    {
+        return $this->morphOne(SystemUser::class, 'userable');
+    }
+
+    /**
      * The model store method
      *
      * @param Request $request
@@ -74,6 +87,15 @@ class TrainingSetting extends Model
             $model->slug = $request->slug;
             $model->role = $request->role;
             $model->save();
+
+            if ($model->slug) {
+                if ($model->role === 'ADMINISTRATOR') {
+                    TrainingSettingUpdate::dispatch($model, ['training-administrator']);
+                } else {
+                    TrainingSettingUpdate::dispatch($model, ['training-officer']);
+                }
+
+            }
 
             DB::connection($model->connection)->commit();
 

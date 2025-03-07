@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('slug', 18)->unique();
-            $table->enum('role', ['ADMINISTRATOR', 'KADIS'])->index()->default('ADMINISTRATOR');
+            $table->enum('role', ['ADMINISTRATOR', 'OFFICER'])->index()->default('ADMINISTRATOR');
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
