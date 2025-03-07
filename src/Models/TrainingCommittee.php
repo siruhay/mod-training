@@ -81,6 +81,7 @@ class TrainingCommittee extends Model
         return [
             ['title' => 'N.I.K', 'value' => 'slug'],
             ['title' => 'Name', 'value' => 'name'],
+            ['title' => 'Type', 'value' => 'type'],
             ['title' => 'Updated', 'value' => 'updated_at', 'sortable' => false, 'width' => '170'],
         ];
     }
@@ -97,6 +98,7 @@ class TrainingCommittee extends Model
             'id' => $model->id,
             'name' => $model->name,
             'slug' => $model->slug,
+            'type' => $model->type,
 
             'subtitle' => (string) $model->updated_at,
             'updated_at' => (string) $model->updated_at,
@@ -148,7 +150,19 @@ class TrainingCommittee extends Model
 
             $parent->committees()->save($model);
 
-            TrainingCommitteeUpdate::dispatch($model);
+            switch ($model->type) {
+                case 'MODERATOR':
+                    TrainingCommitteeUpdate::dispatch($model, ['training-moderator']);
+                    break;
+
+                case 'SPEAKER':
+                    TrainingCommitteeUpdate::dispatch($model, ['mytraining-speaker']);
+                    break;
+
+                default:
+                    TrainingCommitteeUpdate::dispatch($model, ['training-fellow']);
+                    break;
+            }
 
             DB::connection($model->connection)->commit();
 
@@ -180,7 +194,19 @@ class TrainingCommittee extends Model
             $model->type = $request->type;
             $model->save();
 
-            TrainingCommitteeUpdate::dispatch($model);
+            switch ($model->type) {
+                case 'MODERATOR':
+                    TrainingCommitteeUpdate::dispatch($model, ['training-moderator']);
+                    break;
+
+                case 'SPEAKER':
+                    TrainingCommitteeUpdate::dispatch($model, ['mytraining-speaker']);
+                    break;
+
+                default:
+                    TrainingCommitteeUpdate::dispatch($model, ['training-fellow']);
+                    break;
+            }
 
             DB::connection($model->connection)->commit();
 

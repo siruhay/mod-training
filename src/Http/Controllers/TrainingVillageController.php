@@ -132,9 +132,9 @@ class TrainingVillageController extends Controller
     public function particiables(TrainingVillage $trainingVillage, Request $request)
     {
         if ($request->mode === 'LKD') {
-            return TrainingMember::where('village_id', $trainingVillage->id)->orderBy('name')->forCombo();
+            return TrainingMember::whereNotNull('slug')->where('village_id', $trainingVillage->id)->orderBy('name')->forCombo();
         }
 
-        return TrainingOfficial::where('village_id', $trainingVillage->id)->orderBy('name')->forCombo();
+        return TrainingOfficial::whereNotNull('slug')->where('village_id', $trainingVillage->id)->orderBy('name')->forCombo();
     }
 }
