@@ -160,6 +160,26 @@
 						</v-col>
 					</v-row>
 				</v-col>
+
+				<v-col
+					cols="12"
+					v-if="isAdministrator && record.status === 'SUBMITTED'"
+				>
+					<v-btn
+						:disabled="
+							!(
+								record.hasCommittee &&
+								record.hasParticipant &&
+								record.hasRundown
+							)
+						"
+						color="deep-orange"
+						variant="flat"
+						block
+						@click="postPublished(record)"
+						>PUBLISH EVENT</v-btn
+					>
+				</v-col>
 			</v-row>
 		</template>
 	</form-show>
@@ -172,6 +192,15 @@ export default {
 	methods: {
 		postAssigned: function (record) {
 			this.$http(`training/api/event/${record.id}/assigned`, {
+				method: "POST",
+				params: record,
+			}).then(() => {
+				this.$router.push({ name: "training-event" });
+			});
+		},
+
+		postPublished: function (record) {
+			this.$http(`training/api/event/${record.id}/published`, {
 				method: "POST",
 				params: record,
 			}).then(() => {

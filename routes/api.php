@@ -24,6 +24,7 @@ Route::get('dashboard', [DashboardController::class, 'index']);
 Route::get('report', [DashboardController::class, 'report']);
 
 Route::post('event/{trainingEvent}/assigned', [TrainingEventController::class, 'assigned']);
+Route::post('event/{trainingEvent}/published', [TrainingEventController::class, 'published']);
 Route::post('event/{trainingEvent}/rejected', [TrainingEventController::class, 'rejected']);
 Route::post('event/{trainingEvent}/submission', [TrainingEventController::class, 'submission']);
 Route::resource('event', TrainingEventController::class)

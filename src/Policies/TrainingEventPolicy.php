@@ -68,6 +68,21 @@ class TrainingEventPolicy
     }
 
     /**
+     * published function
+     *
+     * @param SystemUser $user
+     * @param TrainingEvent $trainingEvent
+     * @return boolean
+     */
+    public function published(SystemUser $user, TrainingEvent $trainingEvent): bool
+    {
+        return
+            $user->hasLicenseAs('training-administrator') &&
+            $trainingEvent->status === 'SUBMITTED' &&
+            $user->hasPermission('update-training-event');
+    }
+
+    /**
      * rejected function
      *
      * @param SystemUser $user
