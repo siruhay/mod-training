@@ -78,7 +78,7 @@ class TrainingEventPolicy
     {
         return
             $user->hasLicenseAs('training-administrator') &&
-            $trainingEvent->status === 'SUBMITTED' &&
+            $trainingEvent->status === 'ASSIGNED' &&
             $user->hasPermission('update-training-event');
     }
 
