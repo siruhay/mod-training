@@ -21,7 +21,7 @@ return new class () extends Migration {
             $table->foreignId('subdistrict_id')->nullable();
             $table->foreignId('regency_id')->nullable();
             $table->foreignId('officer_id')->nullable();
-            $table->enum('status', ['DRAFTED', 'SUBMITTED', 'REPAIRED', 'REJECTED', 'ASSSIGNED', 'PUBLISHED', 'CERTIFICATE', 'COMPLETED'])->index()->default('DRAFTED');
+            $table->enum('status', ['DRAFTED', 'SUBMITTED', 'REPAIRED', 'REJECTED', 'ASSIGNED', 'PUBLISHED', 'CERTIFICATE', 'COMPLETED'])->index()->default('DRAFTED');
             $table->jsonb('files')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
