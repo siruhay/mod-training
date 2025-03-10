@@ -172,6 +172,24 @@ export default {
 	name: "training-event-show",
 
 	methods: {
+		postAssigned: function (record) {
+			this.$http(`training/api/event/${record.id}/assigned`, {
+				method: "POST",
+				params: record,
+			}).then(() => {
+				this.$router.push({ name: "training-event" });
+			});
+		},
+
+		postRejected: function (record) {
+			this.$http(`training/api/event/${record.id}/rejected`, {
+				method: "POST",
+				params: record,
+			}).then(() => {
+				this.$router.push({ name: "training-event" });
+			});
+		},
+
 		postSubmission: function (record) {
 			this.$http(`training/api/event/${record.id}/submission`, {
 				method: "POST",

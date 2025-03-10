@@ -53,7 +53,41 @@ class TrainingEventPolicy
     }
 
     /**
-     * Determine whether the user can submission the model.
+     * assigned function
+     *
+     * @param SystemUser $user
+     * @param TrainingEvent $trainingEvent
+     * @return boolean
+     */
+    public function assigned(SystemUser $user, TrainingEvent $trainingEvent): bool
+    {
+        return
+            $user->hasLicenseAs('training-officer') &&
+            $trainingEvent->status === 'SUBMITTED' &&
+            $user->hasPermission('update-training-event');
+    }
+
+    /**
+     * rejected function
+     *
+     * @param SystemUser $user
+     * @param TrainingEvent $trainingEvent
+     * @return boolean
+     */
+    public function rejected(SystemUser $user, TrainingEvent $trainingEvent): bool
+    {
+        return
+            $user->hasLicenseAs('training-officer') &&
+            $trainingEvent->status === 'SUBMITTED' &&
+            $user->hasPermission('update-training-event');
+    }
+
+    /**
+     * submission function
+     *
+     * @param SystemUser $user
+     * @param TrainingEvent $trainingEvent
+     * @return boolean
      */
     public function submission(SystemUser $user, TrainingEvent $trainingEvent): bool
     {

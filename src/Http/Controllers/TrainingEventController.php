@@ -75,7 +75,39 @@ class TrainingEventController extends Controller
     }
 
     /**
-     * Undocumented function
+     * assigned function
+     *
+     * @param Request $request
+     * @param TrainingEvent $trainingEvent
+     * @return void
+     */
+    public function assigned(Request $request, TrainingEvent $trainingEvent)
+    {
+        Gate::authorize('assigned', $trainingEvent);
+
+        $request->validate([]);
+
+        return TrainingEvent::assignedRecord($request, $trainingEvent);
+    }
+
+    /**
+     * rejected function
+     *
+     * @param Request $request
+     * @param TrainingEvent $trainingEvent
+     * @return void
+     */
+    public function rejected(Request $request, TrainingEvent $trainingEvent)
+    {
+        Gate::authorize('rejected', $trainingEvent);
+
+        $request->validate([]);
+
+        return TrainingEvent::rejectedRecord($request, $trainingEvent);
+    }
+
+    /**
+     * submission function
      *
      * @param Request $request
      * @param TrainingEvent $trainingEvent

@@ -344,7 +344,63 @@ class TrainingEvent extends Model
     }
 
     /**
-     * The model update method
+     * assignedRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function assignedRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            $model->status = 'ASSIGNED';
+            $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new EventResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * rejectedRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function rejectedRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            $model->status = 'REJECTED';
+            $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new EventResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * submissionRecord function
      *
      * @param Request $request
      * @param [type] $model
@@ -357,6 +413,8 @@ class TrainingEvent extends Model
         try {
             $model->status = 'SUBMITTED';
             $model->save();
+
+            /** GENERATE SURAT KETERANGAN */
 
             DB::connection($model->connection)->commit();
 
