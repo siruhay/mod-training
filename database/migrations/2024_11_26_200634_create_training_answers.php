@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,8 +15,10 @@ return new class extends Migration
             $table->foreignId('event_id');
             $table->foreignId('participant_id');
             $table->foreignId('question_id');
+            $table->enum('mode', ['PRETEST', 'POSTEST'])->index()->default('');
             $table->string('answer', 1)->index()->default('A');
             $table->boolean('is_correct')->default(false);
+            $table->timestamp('answered_at')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
