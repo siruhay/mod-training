@@ -1,5 +1,5 @@
 <template>
-	<form-data hide-addnew>
+	<form-data hide-addnew navback-to="training-event-show">
 		<template v-slot:forminfo></template>
 
 		<template v-slot:helpdesk></template>

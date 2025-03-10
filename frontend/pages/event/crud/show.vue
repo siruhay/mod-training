@@ -163,7 +163,7 @@
 
 				<v-col
 					cols="12"
-					v-if="isAdministrator && record.status === 'SUBMITTED'"
+					v-if="isAdministrator && record.status === 'ASSIGNED'"
 				>
 					<v-btn
 						:disabled="
