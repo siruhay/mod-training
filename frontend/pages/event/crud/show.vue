@@ -23,7 +23,6 @@
 					<v-col cols="4">
 						<v-text-field
 							label="Mulai"
-							type="date"
 							v-model="record.startdate"
 							hide-details
 							readonly
@@ -33,7 +32,6 @@
 					<v-col cols="4">
 						<v-text-field
 							label="Selesai"
-							type="date"
 							v-model="record.finishdate"
 							hide-details
 							readonly
