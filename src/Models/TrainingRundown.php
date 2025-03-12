@@ -101,7 +101,8 @@ class TrainingRundown extends Model
      */
     public static function storeRecord(Request $request, TrainingEvent $parent)
     {
-        $model = new static();
+        $model      = new static();
+        $speaker    = TrainingCommittee::find($request->speaker_id);
 
         DB::connection($model->connection)->beginTransaction();
 
@@ -112,7 +113,8 @@ class TrainingRundown extends Model
             $model->starttime = $request->starttime;
             $model->finishtime = $request->finishtime;
             $model->agenda = $request->agenda;
-            $model->speaker_id = $request->speaker_id;
+            $model->speaker_id = optional($speaker)->id;
+            $model->speaker_name = optional($speaker)->name;
             $parent->rundowns()->save($model);
 
             DB::connection($model->connection)->commit();
@@ -137,6 +139,8 @@ class TrainingRundown extends Model
      */
     public static function updateRecord(Request $request, $model, $parent)
     {
+        $speaker    = TrainingCommittee::find($request->speaker_id);
+
         DB::connection($model->connection)->beginTransaction();
 
         try {
@@ -146,7 +150,8 @@ class TrainingRundown extends Model
             $model->starttime = $request->starttime;
             $model->finishtime = $request->finishtime;
             $model->agenda = $request->agenda;
-            $model->speaker_id = $request->speaker_id;
+            $model->speaker_id = optional($speaker)->id;
+            $model->speaker_name = optional($speaker)->name;
             $model->save();
 
             DB::connection($model->connection)->commit();

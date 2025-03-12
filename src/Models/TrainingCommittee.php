@@ -10,6 +10,7 @@ use Module\System\Traits\Filterable;
 use Module\System\Traits\Searchable;
 use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Module\Training\Models\TrainingEvent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Module\Training\Events\TrainingCommitteeUpdate;
@@ -60,6 +61,19 @@ class TrainingCommittee extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    /**
+     * mapCombos function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapCombos(Request $request): array
+    {
+        return [
+            'committees' => static::forCombo()
+        ];
+    }
 
     /**
      * mapHeaders function
@@ -119,6 +133,19 @@ class TrainingCommittee extends Model
             'name' => $model->name,
             'type' => $model->type,
         ];
+    }
+
+    /**
+     * scopeForCombo function
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeForCombo(Builder $query)
+    {
+        return $query
+            ->select('name AS title', 'slug AS value', 'type')
+            ->get();
     }
 
     /**

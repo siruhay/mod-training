@@ -1,14 +1,16 @@
 <template>
 	<form-create with-helpdesk>
-		<template v-slot:default="{ record }">
+		<template v-slot:default="{ combos: { committees }, record }">
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="12">
-						<v-text-field
+						<v-combobox
+							:items="committees"
 							label="Name"
 							v-model="record.name"
 							hide-details
-						></v-text-field>
+							@update:modelValue="mapDataCombo($event, record)"
+						></v-combobox>
 					</v-col>
 
 					<v-col cols="8">
@@ -36,5 +38,12 @@
 <script>
 export default {
 	name: "training-committee-create",
+
+	methods: {
+		mapDataCombo(model, record) {
+			record.slug = model.value;
+			record.type = model.type;
+		},
+	},
 };
 </script>

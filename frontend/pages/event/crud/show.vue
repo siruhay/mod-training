@@ -180,6 +180,26 @@
 						>PUBLISH EVENT</v-btn
 					>
 				</v-col>
+
+				<v-col
+					cols="12"
+					v-if="isAdministrator && record.status === 'PUBLISHED'"
+				>
+					<v-btn
+						:disabled="
+							!(
+								record.hasCommittee &&
+								record.hasParticipant &&
+								record.hasRundown
+							)
+						"
+						color="deep-orange"
+						variant="flat"
+						block
+						@click="postCompleted(record)"
+						>PUBLISH SERTIFIKAT</v-btn
+					>
+				</v-col>
 			</v-row>
 		</template>
 	</form-show>
