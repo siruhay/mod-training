@@ -71,7 +71,7 @@ class TrainingCommittee extends Model
     public static function mapCombos(Request $request): array
     {
         return [
-            'committees' => static::forCombo()
+            'biodatas' => TrainingBiodata::forCombo()
         ];
     }
 
@@ -136,19 +136,6 @@ class TrainingCommittee extends Model
     }
 
     /**
-     * scopeForCombo function
-     *
-     * @param Builder $query
-     * @return void
-     */
-    public function scopeForCombo(Builder $query)
-    {
-        return $query
-            ->select('name AS title', 'slug AS value', 'type')
-            ->get();
-    }
-
-    /**
      * user function
      *
      * @return MorphOne
@@ -171,9 +158,20 @@ class TrainingCommittee extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
+            $name       = is_array($request->name) ? $request->name['title'] : $request->name;
+            $slug       = $request->slug;
+
+            if (! $biodata = TrainingBiodata::firstWhere('slug', $slug)) {
+                $biodata = new TrainingBiodata();
+                $biodata->name = $name;
+                $biodata->slug = $slug;
+                $biodata->save();
+            }
+
+            $model->name = $name;
+            $model->slug = $slug;
             $model->type = $request->type;
+            $model->biodata_id = $biodata->id;
 
             $parent->committees()->save($model);
 
@@ -216,9 +214,20 @@ class TrainingCommittee extends Model
         DB::connection($model->connection)->beginTransaction();
 
         try {
-            $model->name = $request->name;
-            $model->slug = $request->slug;
+            $name       = is_array($request->name) ? $request->name['title'] : $request->name;
+            $slug       = $request->slug;
+
+            if (! $biodata = TrainingBiodata::firstWhere('slug', $slug)) {
+                $biodata = new TrainingBiodata();
+                $biodata->name = $name;
+                $biodata->slug = $slug;
+                $biodata->save();
+            }
+
+            $model->name = $name;
+            $model->slug = $slug;
             $model->type = $request->type;
+            $model->biodata_id = $biodata->id;
             $model->save();
 
             switch ($model->type) {

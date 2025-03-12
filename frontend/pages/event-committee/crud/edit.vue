@@ -1,11 +1,11 @@
 <template>
 	<form-edit with-helpdesk>
-		<template v-slot:default="{ combos: { committees }, record }">
+		<template v-slot:default="{ combos: { biodatas }, record }">
 			<v-card-text>
 				<v-row dense>
 					<v-col cols="12">
 						<v-combobox
-							:items="committees"
+							:items="biodatas"
 							label="Name"
 							v-model="record.name"
 							hide-details
