@@ -103,6 +103,22 @@ class TrainingSetting extends Model
     }
 
     /**
+     * mapResourceShow function
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function mapResourceShow(Request $request, $model): array
+    {
+        return [
+            'id' => $model->id,
+            'name' => $model->name,
+            'slug' => $model->slug,
+            'role' => $model->role,
+        ];
+    }
+
+    /**
      * user function
      *
      * @return MorphOne
