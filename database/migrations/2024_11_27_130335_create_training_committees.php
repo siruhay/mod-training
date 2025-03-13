@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('training_committees', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200)->index();
-            $table->string('slug', 16)->index();
+            $table->string('slug', 18)->index();
             $table->enum('type', ['MODERATOR', 'FELLOW', 'SPEAKER'])->index()->default('FELLOW');
             $table->foreignId('biodata_id');
             $table->foreignId('event_id');
