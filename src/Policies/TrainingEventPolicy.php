@@ -41,7 +41,9 @@ class TrainingEventPolicy
      */
     public function create(SystemUser $user): bool
     {
-        return $user->hasPermission('create-training-event');
+        return
+            $user->hasLicenseAs('training-administrator') &&
+            $user->hasPermission('create-training-event');
     }
 
     /**
@@ -49,7 +51,9 @@ class TrainingEventPolicy
      */
     public function update(SystemUser $user, TrainingEvent $trainingEvent): bool
     {
-        return $user->hasPermission('update-training-event');
+        return
+            $user->hasLicenseAs('training-administrator') &&
+            $user->hasPermission('update-training-event');
     }
 
     /**
