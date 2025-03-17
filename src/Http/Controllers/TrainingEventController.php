@@ -91,6 +91,22 @@ class TrainingEventController extends Controller
     }
 
     /**
+     * completed function
+     *
+     * @param Request $request
+     * @param TrainingEvent $trainingEvent
+     * @return void
+     */
+    public function completed(Request $request, TrainingEvent $trainingEvent)
+    {
+        Gate::authorize('completed', $trainingEvent);
+
+        $request->validate([]);
+
+        return TrainingEvent::completedRecord($request, $trainingEvent);
+    }
+
+    /**
      * published function
      *
      * @param Request $request

@@ -219,6 +219,15 @@ export default {
 			});
 		},
 
+		postCompleted: function (record) {
+			this.$http(`training/api/event/${record.id}/completed`, {
+				method: "POST",
+				params: record,
+			}).then(() => {
+				this.$router.push({ name: "training-event" });
+			});
+		},
+
 		postPublished: function (record) {
 			this.$http(`training/api/event/${record.id}/published`, {
 				method: "POST",

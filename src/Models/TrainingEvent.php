@@ -372,6 +372,34 @@ class TrainingEvent extends Model
     }
 
     /**
+     * completedRecord function
+     *
+     * @param Request $request
+     * @param [type] $model
+     * @return void
+     */
+    public static function completedRecord(Request $request, $model)
+    {
+        DB::connection($model->connection)->beginTransaction();
+
+        try {
+            $model->status = 'COMPLETED';
+            $model->save();
+
+            DB::connection($model->connection)->commit();
+
+            return new EventResource($model);
+        } catch (\Exception $e) {
+            DB::connection($model->connection)->rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * publishedRecord function
      *
      * @param Request $request
