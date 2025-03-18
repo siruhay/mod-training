@@ -165,6 +165,7 @@ class TrainingCommittee extends Model
                 $biodata = new TrainingBiodata();
                 $biodata->name = $name;
                 $biodata->slug = $slug;
+                $biodata->type = $request->type;
                 $biodata->save();
             }
 
@@ -221,6 +222,7 @@ class TrainingCommittee extends Model
                 $biodata = new TrainingBiodata();
                 $biodata->name = $name;
                 $biodata->slug = $slug;
+                $biodata->type = $request->type;
                 $biodata->save();
             }
 
