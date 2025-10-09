@@ -14,18 +14,15 @@ return new class () extends Migration {
             $table->id();
             $table->string('name', 200)->index();
             $table->string('slug', 40)->unique();
-            $table->foreignId('event_id');
-            $table->morphs('particiable');
             $table->enum('mode', ['LKD', 'DESA'])->index()->default('LKD');
-            $table->string('nik', 16)->index();
-            $table->foreignId('gender_id')->nullable();
-            $table->string('phone', 20)->index();
-            $table->foreignId('subdistrict_id');
-            $table->foreignId('village_id');
+            $table->foreignId('biodata_id');
+            $table->foreignId('event_id');
             $table->timestamp('accepted_at')->nullable();
             $table->jsonb('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->unique(['biodata_id', 'event_id']);
         });
     }
 
