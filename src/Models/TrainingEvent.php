@@ -11,13 +11,16 @@ use Module\System\Traits\HasPageSetup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Module\Training\Http\Resources\EventResource;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Module\Training\Database\Factories\TrainingEventFactory;
 
 class TrainingEvent extends Model
 {
     use Filterable;
+    use HasFactory;
     use HasMeta;
     use HasPageSetup;
     use Searchable;
@@ -61,6 +64,11 @@ class TrainingEvent extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    protected static function newFactory(): TrainingEventFactory
+    {
+        return TrainingEventFactory::new();
+    }
 
     /**
      * mapCombos function

@@ -14,6 +14,7 @@
     "autoload": {
         "psr-4": {
             "Module\\Training\\": "src/",
+            "Module\\Training\\Database\\Factories\\": "database/factories",
             "ModuleTraining\\Seeders\\": "database/seeders"
         }
     }

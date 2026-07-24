@@ -13,11 +13,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Module\Training\Models\TrainingEvent;
 use Module\Reference\Models\ReferenceGender;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Module\Training\Http\Resources\ParticipantResource;
+use Module\Training\Database\Factories\TrainingParticipantFactory;
 
 class TrainingParticipant extends Model
 {
     use Filterable;
+    use HasFactory;
     use HasMeta;
     use HasPageSetup;
     use Searchable;
@@ -59,6 +62,11 @@ class TrainingParticipant extends Model
      * @var string
      */
     protected $defaultOrder = 'name';
+
+    protected static function newFactory(): TrainingParticipantFactory
+    {
+        return TrainingParticipantFactory::new();
+    }
 
     /**
      * mapCombos function
