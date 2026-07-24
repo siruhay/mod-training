@@ -18,9 +18,18 @@ class DashboardController extends Controller
      * @param Request $request
      * @return void
      */
-    public function index(Request $request): void
+    public function index(Request $request): JsonResponse
     {
-        //
+        return response()->json([
+            'record' => [
+                'totalEvents' => TrainingEvent::count(),
+                'upcomingEvents' => TrainingEvent::whereIn('status', ['ASSIGNED', 'PUBLISHED'])
+                    ->where('startdate', '>=', now()->toDateString())
+                    ->count(),
+                'completedEvents' => TrainingEvent::whereIn('status', ['COMPLETED', 'CERTIFIED'])->count(),
+                'acceptedParticipants' => TrainingParticipant::whereNotNull('accepted_at')->count(),
+            ],
+        ]);
     }
 
     /**
